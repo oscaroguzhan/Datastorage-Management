@@ -18,15 +18,15 @@ public class ProjectEntity
     public DateTime? EndDate { get; set; }
 
     public Guid CustomerId { get; set; }
-    public CustomerEntity Customer { get; set; } = null!;
+    public virtual CustomerEntity Customer { get; set; } = null!;
 
     public int StatusTypeId { get; set; }
-    public StatusTypeEntity StatusType { get; set; } = null!;
+    public virtual StatusTypeEntity StatusType { get; set; } = null!;
 
     public int ProductId { get; set; }
-    public ProductEntity Product { get; set; } = null!;
+    public virtual ProductEntity Product { get; set; } = null!;
 
     public int UserId { get; set; }
-    public UserEntity User { get; set; } = null!;
+    public virtual UserEntity User { get; set; } = null!;
 
 }
