@@ -6,7 +6,8 @@ namespace Data.Entities;
 public class CustomerEntity
 {
     [Key]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string CustomerName { get; set; } = null!;
+
 }
 
