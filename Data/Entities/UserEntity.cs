@@ -12,4 +12,7 @@ public class UserEntity
 
     [EmailAddress]
     public string Email { get; set; } = null!;
+
+    // a user can have multiple projects
+    public virtual ICollection<ProjectEntity>? Projects { get; set; } = [];
 }

@@ -14,7 +14,7 @@ namespace Data.Repositories;
 /// <typeparam name="TEntity"></typeparam>
 public abstract class BaseRepository<TEntity>(DataContext context) : IBaseRepository<TEntity> where TEntity : class
 {
-    protected readonly DbContext _context = context;
+    protected readonly DataContext _context = context;
     protected readonly DbSet<TEntity> _db = context.Set<TEntity>();
 
     public virtual async Task<TEntity> CreateAsync(TEntity entity)
@@ -35,18 +35,24 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             return null!;
         }
     }
+
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         var entities = await _db.ToListAsync();
         return entities;
     }
+
     public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression)
     {
-        var entity = await _db.FirstOrDefaultAsync(expression);
-        return entity;
+        if(expression == null)
+        {
+            return null!;
+        }
+        return await _db.FirstOrDefaultAsync(expression) ?? null!;
+        
     }
 
-    public async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updateteEntity)
+    public virtual async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updateteEntity)
         {
             if(updateteEntity == null)
             {
@@ -55,6 +61,10 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             try
             {
                 var existingEntity = await _db.FirstOrDefaultAsync(expression) ?? null!;
+                if(existingEntity == null) 
+                {
+                    return null!;
+                }
                 _context.Entry(existingEntity).CurrentValues.SetValues(updateteEntity);
                 await _context.SaveChangesAsync();
                 return existingEntity;
@@ -90,11 +100,4 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         return await _db.AllAsync(expression);
     }
-
-
-
-
-
-    
-
 }
