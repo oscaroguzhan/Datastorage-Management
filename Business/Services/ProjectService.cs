@@ -72,6 +72,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
     public async Task<bool> DeleteProjectAsync(int id)
     {
         var entity = await _projectRepository.DeleteAsync( e => e.Id == id);
+        
         return entity!;
     }
 

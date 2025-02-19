@@ -35,9 +35,10 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         return await _customerRepository.AlreadyExistsAsync(expression);
     }
 
-    public Task<bool> DeleteCustomerAsync(int id)
+    public async Task<bool> DeleteCustomerAsync(int id)
     {
-        throw new NotImplementedException();
+        var entity = await _customerRepository.DeleteAsync( e => e.Id == id);
+        return entity!;
     }
 
     public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
@@ -47,13 +48,27 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
     }
 
 
-    public Task<Customer> GetCustomerAsync(Expression<Func<CustomerEntity, bool>> expression)
+    public async Task<Customer> GetCustomerAsync(Expression<Func<CustomerEntity, bool>> expression)
     {
-        throw new NotImplementedException();
+        var entity = await _customerRepository.GetAsync(expression);
+        if(entity!=null)
+        {
+            return CustomerFactory.Create(entity);
+        }
+        return null!;
+ 
     }
 
-    public Task<Customer> UpdateCustomerAsync(CustomerUpdateForm form)
+    public async Task<Customer> UpdateCustomerAsync(CustomerUpdateForm form)
     {
-        throw new NotImplementedException();
+        var entity = await _customerRepository.GetAsync(c => c.Id == form.Id);
+        if(entity!=null)
+        {
+            entity.CustomerName = form.CustomerName;
+
+            await _customerRepository.UpdateAsync(e => e.Id == form.Id, entity);
+            return CustomerFactory.Create(entity);
+        }
+        return null!;
     }
 }
