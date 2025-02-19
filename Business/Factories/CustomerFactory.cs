@@ -19,4 +19,16 @@ public static class CustomerFactory
         Id = entity.Id,
         CustomerName = entity.CustomerName
     };
+
+    public static CustomerEntity Create(CustomerUpdateForm form) => new()
+    {
+        Id = form.Id,
+        CustomerName = form.CustomerName
+    };
+
+    public static CustomerUpdateForm Update(Customer customer) => new()
+    {
+        Id = customer.Id,
+        CustomerName = customer.CustomerName
+    };
 }

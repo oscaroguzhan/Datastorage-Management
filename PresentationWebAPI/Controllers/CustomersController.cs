@@ -86,10 +86,10 @@ namespace PresentationWebAPI.Controllers
                 }
                 else
                 {
-                    return BadRequest();
+                    return NotFound("Customer not found or update failed");
                 }
             }
-            return BadRequest();
+            return BadRequest(ModelState);
         }
     }
 }

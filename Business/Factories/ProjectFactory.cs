@@ -9,25 +9,30 @@ public static class ProjectFactory
 {
     public static ProjectRegistrationForm Create() => new();
 
-    public static ProjectEntity Create(ProjectRegistrationForm form) 
+    public static ProjectEntity Create(ProjectRegistrationForm form)  => new()
     {
-        return new ProjectEntity
-        {
             Title = form.Title,
             Description = form.Description,
             StartDate = form.StartDate,
             EndDate = form.EndDate
-        };
-    }
-
-    public static Project Create(ProjectEntity entity) => new()
-    {
-        Id = entity.Id,
-        Title = entity.Title,
-        Description = entity.Description,
-        StartDate = entity.StartDate,
-        EndDate = entity.EndDate
     };
+
+    public static Project Create(ProjectEntity entity) 
+    {
+        // check if the entity is null
+        if (entity != null)
+        {
+            return new Project
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Description = entity.Description,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate
+            };  
+        }
+        return null!;
+    }
 
     public static ProjectEntity Create(ProjectUpdateForm form) => new()
     {

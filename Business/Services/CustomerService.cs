@@ -61,13 +61,14 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
     public async Task<Customer> UpdateCustomerAsync(CustomerUpdateForm form)
     {
-        var entity = await _customerRepository.GetAsync(c => c.Id == form.Id);
+        var entity = await _customerRepository.GetAsync(c => c.CustomerName == form.CustomerName);
         if(entity!=null)
         {
             entity.CustomerName = form.CustomerName;
 
             await _customerRepository.UpdateAsync(e => e.Id == form.Id, entity);
             return CustomerFactory.Create(entity);
+            
         }
         return null!;
     }
