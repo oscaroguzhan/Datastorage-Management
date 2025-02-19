@@ -1,4 +1,5 @@
 
+using System.Diagnostics;
 using System.Linq.Expressions;
 using Data.Contexts;
 using Data.Interfaces;
@@ -16,53 +17,84 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     protected readonly DbContext _context = context;
     protected readonly DbSet<TEntity> _db = context.Set<TEntity>();
 
-    public async Task<TEntity> CreateAsync(TEntity entity)
+    public virtual async Task<TEntity> CreateAsync(TEntity entity)
     {
-        await _db.AddAsync(entity);
-        await _context.SaveChangesAsync();
-        return entity;
+        if(entity == null) {
+            return null!;
+        }
+        try
+        {
+            await _db.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        catch (Exception ex) 
+        {
+            
+            Debug.WriteLine($"Error creating {nameof(TEntity)}: {ex.Message}");
+            return null!;
+        }
     }
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         var entities = await _db.ToListAsync();
         return entities;
     }
-    public Task<bool> AlreadyExistsAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression)
+    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> expression)
     {
         var entity = await _db.FirstOrDefaultAsync(expression);
         return entity;
     }
 
-    public async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression)
-    {
-        var entity = await _db.FirstOrDefaultAsync(expression);
-        if (entity != null)
+    public async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity updateteEntity)
         {
+            if(updateteEntity == null)
+            {
+                return null!;
+            }
+            try
+            {
+                var existingEntity = await _db.FirstOrDefaultAsync(expression) ?? null!;
+                _context.Entry(existingEntity).CurrentValues.SetValues(updateteEntity);
+                await _context.SaveChangesAsync();
+                return existingEntity;
+            }
+            catch (Exception ex) 
+            {
+            
+            Debug.WriteLine($"Error updating {nameof(TEntity)}: {ex.Message}");
+            return null!;
+            }
+        }
+    public virtual async Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> expression)
+    {
+        try
+        {
+            var entity = await _db.FirstOrDefaultAsync(expression );
+            if(entity== null)
+            {
+                return false;  
+            }
             _db.Remove(entity);
             await _context.SaveChangesAsync();
-            return true;
+            return true;  
         }
-        return false;
+        catch (Exception ex) 
+        { 
+            Debug.WriteLine($"Error deleting {nameof(TEntity)}: {ex.Message}");
+            return false;
+        }
     }
 
-
-
-    public async Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression)
+    public virtual async Task<bool> AlreadyExistsAsync(Expression<Func<TEntity, bool>> expression)
     {
-        var existingEntity = await _db.FirstOrDefaultAsync(expression);
-        if (existingEntity != null)
-        {
-            _db.Update(existingEntity);
-            await _context.SaveChangesAsync();
-            return existingEntity;
-
-        }
-        return null!;
+        return await _db.AllAsync(expression);
     }
+
+
+
+
+
+    
 
 }
