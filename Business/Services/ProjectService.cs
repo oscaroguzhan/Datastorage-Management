@@ -40,7 +40,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         return entities.Select(ProjectFactory.Create) ?? [];
     }
 
-    public async Task<Project> GetProjectAsync(Expression<Func<ProjectEntity, bool>> expression)
+    public async Task<Project?> GetProjectAsync(Expression<Func<ProjectEntity, bool>> expression)
     {
         var entity = await _projectRepository.GetAsync(expression);
         if(entity!=null)

@@ -10,5 +10,8 @@ public class CustomerEntity
     public string CustomerName { get; set; } = null!;
 
     public virtual ICollection<ProjectEntity> Projects { get; set; } = [];
+    
+    
+
 }
 

@@ -1,4 +1,4 @@
-using System;
+
 using System.Diagnostics;
 using System.Linq.Expressions;
 using Business.Dtos.Customer;
@@ -41,14 +41,14 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         return entity!;
     }
 
-    public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
+    public async Task<IEnumerable<Customer?>> GetAllCustomersAsync()
     {
         var entities = await _customerRepository.GetAllAsync();
         return entities.Select(CustomerFactory.Create) ?? [];
     }
 
 
-    public async Task<Customer> GetCustomerAsync(Expression<Func<CustomerEntity, bool>> expression)
+    public async Task<Customer?> GetCustomerAsync(Expression<Func<CustomerEntity, bool>> expression)
     {
         var entity = await _customerRepository.GetAsync(expression);
         if(entity!=null)

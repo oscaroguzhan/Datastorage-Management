@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Tables_Added : Migration
+    public partial class Relationships_Tables_Added : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

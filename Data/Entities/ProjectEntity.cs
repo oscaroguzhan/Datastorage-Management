@@ -17,6 +17,7 @@ public class ProjectEntity
     [Column(TypeName = "date")]
     public DateTime? EndDate { get; set; }
 
+    // RELATIONSHIP TO THE OTHER TABLES
     public int CustomerId { get; set; }
     public virtual CustomerEntity Customer { get; set; } = null!;
 
