@@ -8,6 +8,12 @@ public class ProjectRegistrationForm
     [Required]
     public string Title { get; set; }  = null!;
     public string? Description { get; set; }
+
+    [Required]
+    public int CustomerId { get; set; }
+
+    [Required]
+    public int StatusTypeId { get; set; }
     [Required]
     public DateTime StartDate { get; set; }
     [Required]

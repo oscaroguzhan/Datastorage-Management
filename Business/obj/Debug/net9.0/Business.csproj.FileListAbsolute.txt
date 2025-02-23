@@ -13,3 +13,4 @@
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Business/obj/Debug/net9.0/refint/Business.dll
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Business/obj/Debug/net9.0/Business.pdb
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Business/obj/Debug/net9.0/ref/Business.dll
+/Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Business/obj/Debug/net9.0/Business.sourcelink.json

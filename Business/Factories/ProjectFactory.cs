@@ -14,6 +14,10 @@ public static class ProjectFactory
             Title = form.Title,
             Description = form.Description,
             StartDate = form.StartDate,
+
+            // fetch customer and status type details
+            CustomerId = form.CustomerId,
+            StatusTypeId = form.StatusTypeId,
             EndDate = form.EndDate
     };
 
@@ -27,7 +31,18 @@ public static class ProjectFactory
                 Id = entity.Id,
                 Title = entity.Title,
                 Description = entity.Description,
+                CustomerName = new Customer
+                {
+                    Id = entity.CustomerId,
+                    CustomerName = entity.Customer.CustomerName
+
+                },
                 StartDate = entity.StartDate,
+                StatusType = new StatusTypeEntity
+                {
+                    Id = entity.StatusTypeId,
+                    StatusName = entity.StatusType.StatusName,  
+                },
                 EndDate = entity.EndDate
             };  
         }

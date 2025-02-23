@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250220213850_Relationships_Tables_Added")]
-    partial class Relationships_Tables_Added
+    [Migration("20250223202506_Revised_Tables_Added")]
+    partial class Revised_Tables_Added
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,7 +168,7 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Entities.StatusTypeEntity", "StatusType")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("StatusTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -194,6 +194,11 @@ namespace Data.Migrations
                 });
 
             modelBuilder.Entity("Data.Entities.ProductEntity", b =>
+                {
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("Data.Entities.StatusTypeEntity", b =>
                 {
                     b.Navigation("Projects");
                 });

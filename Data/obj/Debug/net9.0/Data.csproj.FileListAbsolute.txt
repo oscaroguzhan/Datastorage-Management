@@ -12,3 +12,4 @@
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Data/obj/Debug/net9.0/Data.pdb
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Data/obj/Debug/net9.0/Data.genruntimeconfig.cache
 /Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Data/obj/Debug/net9.0/ref/Data.dll
+/Volumes/T7/Workspace/NETProjects/DatabaseManagement/AssignmentProject/Data/obj/Debug/net9.0/Data.sourcelink.json

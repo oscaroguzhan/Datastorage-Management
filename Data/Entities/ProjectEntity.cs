@@ -28,5 +28,5 @@ public class ProjectEntity
     public virtual UserEntity User { get; set; } = null!;
     public int ProductId { get; set; }
     public virtual ProductEntity Product { get; set; } = null!;
-
+    
 }

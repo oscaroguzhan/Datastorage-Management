@@ -6,6 +6,12 @@ namespace Business.Models;
 public class Project
 {
     public int Id { get; set; }
+
+    public Customer CustomerName { get; set; } = null!;
+
+    public StatusTypeEntity StatusType { get; set; } = null!;
+
+    
     public string Title { get; set; } = null!;
 
     public string? Description { get; set; }

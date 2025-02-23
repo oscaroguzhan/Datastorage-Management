@@ -165,7 +165,7 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Entities.StatusTypeEntity", "StatusType")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("StatusTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -191,6 +191,11 @@ namespace Data.Migrations
                 });
 
             modelBuilder.Entity("Data.Entities.ProductEntity", b =>
+                {
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("Data.Entities.StatusTypeEntity", b =>
                 {
                     b.Navigation("Projects");
                 });
